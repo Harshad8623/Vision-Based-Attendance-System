@@ -30,17 +30,23 @@ MODELS = {
 
 
 def verified(path: Path, expected: dict) -> bool:
-    if not path.is_file() or path.stat().st_size != expected["size"]:
+    try:
+        if not path.is_file() or path.stat().st_size != expected["size"]:
+            return False
+        digest = hashlib.sha256()
+        with path.open("rb") as source:
+            for chunk in iter(lambda: source.read(1024 * 1024), b""):
+                digest.update(chunk)
+        return digest.hexdigest() == expected["sha256"]
+    except OSError:
+        # Unreadable assets are unavailable, not an application-health crash.
         return False
-    digest = hashlib.sha256()
-    with path.open("rb") as source:
-        for chunk in iter(lambda: source.read(1024 * 1024), b""):
-            digest.update(chunk)
-    return digest.hexdigest() == expected["sha256"]
 
 
 def main() -> None:
     MODEL_DIR.mkdir(parents=True, exist_ok=True)
+    # This dedicated cache holds public model weights, never student data.
+    MODEL_DIR.chmod(0o755)
     for info in MODELS.values():
         target = MODEL_DIR / info["filename"]
         if verified(target, info):

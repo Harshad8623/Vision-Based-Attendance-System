@@ -17,3 +17,11 @@ def test_real_models_return_no_faces_for_blank_image(extension):
     encoded, buffer = cv2.imencode(extension, np.zeros((480, 640, 3), dtype=np.uint8))
     assert encoded
     assert extract_faces(buffer.tobytes()) == []
+
+
+def test_unreadable_model_is_unavailable():
+    from pathlib import Path
+    from unittest.mock import patch
+    from backend.download_models import verified
+    with patch.object(Path, "is_file", side_effect=PermissionError("unreadable")):
+        assert verified(Path("unreadable.onnx"), {"size": 1, "sha256": "unused"}) is False

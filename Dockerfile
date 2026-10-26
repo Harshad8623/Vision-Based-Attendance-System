@@ -19,7 +19,7 @@ RUN --mount=type=secret,id=build_ca \
     pip install --no-cache-dir -r backend/requirements.txt \
     && useradd --uid 10001 --create-home classlens \
     && mkdir /data && chown classlens:classlens /data
-COPY backend ./backend
+COPY --chown=classlens:classlens backend ./backend
 COPY --from=web /app/dist ./dist
 USER classlens
 EXPOSE 8000

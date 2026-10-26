@@ -149,7 +149,9 @@ Camera permission can be revoked by the user. The application should remain usab
 docker compose up --build
 ```
 
-The compiled frontend and API run together on port 8000. The Compose file binds only to the local machine, retains the database in a named volume, and mounts downloaded `.local/models/` read-only. Download the models on the host first to enable recognition. The image runs as a non-root user.
+The compiled frontend and API run together on port 8000. The Compose file binds only to the local machine, retains the database in a named volume, and mounts downloaded `.local/models/` read-only. Download the models on the host first to enable recognition. The image runs as a non-root user. The dedicated model cache contains public weights; private student templates stay in the database directory.
+
+For a network using a custom trusted CA, the Dockerfile accepts an optional BuildKit bundle with `docker build --secret id=build_ca,src=/path/to/trusted-ca-bundle.crt -t classlens .`. Configure your approved proxy normally. TLS verification remains enabled; the build-only bundle is not copied into the final image.
 
 This remains a demonstration with public demo accounts; configuring a public deployment requires additional authentication and operational work.
 

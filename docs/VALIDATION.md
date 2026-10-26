@@ -5,8 +5,9 @@ The following checks were executed in the development environment. They establis
 ## Application checks
 
 - TypeScript compilation and Vite production build succeeded.
-- Backend tests passed against temporary SQLite databases, covering signed authentication, role boundaries, registration, scoped analytics, duplicate attendance prevention, audit reasons, session locks, persistence, leave overlaps, leave decisions, and information responses.
+- All 22 backend tests passed against temporary SQLite databases, covering signed authentication, role boundaries, registration, scoped analytics, duplicate attendance prevention, audit reasons, session locks, persistence, leave overlaps, leave decisions, and information responses.
 - Four Chromium browser workflows passed: desktop/mobile navigation with no runtime errors or horizontal overflow at 390px, student leave application and class teacher approval, manual attendance correction with refresh recovery and finalization, and administrator teacher creation and assignment.
+- A multi-stage Docker image built successfully using the cloud proxy’s trusted CA. The non-root container served the compiled frontend, connected to its database, authenticated a teacher, and verified the read-only mounted models. The temporary validation container was removed.
 - Desktop and mobile screenshots in `docs/screenshots/` show the actual interface and fictional seeded records.
 
 ## Vision checks
