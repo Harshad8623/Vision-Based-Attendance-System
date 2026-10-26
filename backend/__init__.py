@@ -1,0 +1,1 @@
+"""ClassLens attendance service."""
