@@ -12,7 +12,7 @@ RUN npm run build
 
 FROM python:3.12-slim-bookworm
 WORKDIR /app
-ENV PYTHONDONTWRITEBYTECODE=1 PYTHONUNBUFFERED=1 CLASSLENS_DATA_DIR=/data
+ENV PYTHONDONTWRITEBYTECODE=1 PYTHONUNBUFFERED=1 CLASSLENS_DATA_DIR=/data CLASSLENS_MODEL_DIR=/data/models
 COPY backend/requirements.txt ./backend/requirements.txt
 RUN --mount=type=secret,id=build_ca \
     if [ -f /run/secrets/build_ca ]; then export PIP_CERT=/run/secrets/build_ca; fi; \
@@ -23,4 +23,4 @@ COPY --chown=classlens:classlens backend ./backend
 COPY --from=web /app/dist ./dist
 USER classlens
 EXPOSE 8000
-CMD ["python", "-m", "uvicorn", "backend.app:app", "--host", "0.0.0.0", "--port", "8000"]
+CMD ["python", "-m", "backend.start"]

@@ -5,7 +5,7 @@ services:
       - "127.0.0.1:8000:8000"
     volumes:
       - classlens-data:/data
-      - ./.local/models:/app/.local/models:ro
+      - ./.local/models:/data/models:ro
     restart: unless-stopped
 volumes:
   classlens-data:

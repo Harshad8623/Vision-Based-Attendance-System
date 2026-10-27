@@ -9,8 +9,7 @@ services:
     branch: main
     dockerfilePath: ./Dockerfile
     dockerContext: .
-    dockerCommand: >-
-      /bin/sh -c 'python backend/download_models.py && exec python -m uvicorn backend.app:app --host 0.0.0.0 --port "${PORT:-10000}"'
+    dockerCommand: python -m backend.start
     healthCheckPath: /api/health
     envVars:
       - key: CLASSLENS_DATA_DIR

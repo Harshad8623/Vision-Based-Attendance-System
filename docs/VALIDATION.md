@@ -2,6 +2,19 @@
 
 The following checks were executed in the development environment. They establish implementation behaviour, not an institutional deployment or a recognition accuracy claim.
 
+## Render startup correction
+
+Render's command handling did not preserve the original nested shell quoting,
+causing startup exit code 127 after a successful image build. The replacement
+`python -m backend.start` uses Python for model setup and port selection, then
+replaces its process with Uvicorn. No nested shell command is required.
+
+All 28 backend tests passed after the correction, including six deployment
+startup checks. The rebuilt image served the frontend and a healthy API on
+`PORT=10000`, used verified read-only model files, and shut down with exit code 0.
+This is a local container check; the Render deployment still needs to apply the
+updated Blueprint or replace its old Docker Command override.
+
 ## Application checks
 
 - TypeScript compilation and Vite production build succeeded.

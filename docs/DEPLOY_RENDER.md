@@ -44,6 +44,25 @@ downloader preserves TLS and checks the pinned sizes and SHA-256 hashes. An
 already verified cached model is reused while that cache exists. A failed
 download stops startup rather than allowing fabricated recognition results.
 
+The startup command is `python -m backend.start`. Model setup and port selection
+run in Python, so the platform does not need to interpret nested shell quotes.
+The Docker image uses the same default command.
+
+### Update an earlier deployment
+
+If an earlier deployment failed with `/bin/sh: ... not found` and exit code 127,
+sync the Blueprint to the latest commit on `main`. Confirm the service's Docker
+Command is exactly:
+
+```text
+python -m backend.start
+```
+
+If you previously entered a manual Docker Command in the service settings,
+replace it with the command above, save, and deploy the latest commit. The failed
+quoted `/bin/sh -c ...` override must not remain. No change to secrets or a paid
+plan is required for this startup correction.
+
 ## Check the deployment
 
 Open `/api/health` on the assigned service URL. Expect:
