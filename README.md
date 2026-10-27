@@ -13,6 +13,8 @@ Mobile camera attendance · Teacher review · Student insights · Leave manageme
 [![Backend](https://img.shields.io/badge/Backend-FastAPI-0f766e?style=flat-square)](#technology)
 [![License](https://img.shields.io/badge/License-MIT-334155?style=flat-square)](LICENSE)
 
+[![Deploy to Render](https://render.com/images/deploy-to-render-button.svg)](https://render.com/deploy?repo=https://github.com/Harshad8623/Vision-Based-Attendance-System)
+
 </div>
 
 ---
@@ -142,6 +144,18 @@ These credentials are intentionally public for a local demonstration. Do not exp
 Browsers require a secure context for camera access. A deployed site needs HTTPS. Opening an ordinary HTTP development server through a phone's LAN address generally does not permit the camera; use an HTTPS development environment or demonstrate photo upload instead.
 
 Camera permission can be revoked by the user. The application should remain usable through photo upload and teacher corrections.
+
+## Deploy on Render
+
+The repository includes a [`render.yaml`](render.yaml) Blueprint for a free Docker
+demonstration. Use the **Deploy to Render** button above, choose **My Workspace**
+in Render, and apply the Blueprint from branch `main`. Model downloads, the
+startup command, writable data paths, and a generated session secret are
+configured automatically.
+
+Follow the [Blueprint deployment guide](docs/DEPLOY_RENDER.md) for the exact steps,
+health check, and troubleshooting. Free storage is ephemeral; public demo
+accounts and fictional records are intended for a demonstration.
 
 ## Containerized demonstration
 

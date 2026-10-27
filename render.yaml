@@ -1,0 +1,21 @@
+# ClassLens by Harshad Madhav Dhuppe
+# Electronics & Computer Engineering · Batch of 2027
+# Free demonstration: records and face enrollments are ephemeral.
+services:
+  - type: web
+    name: classlens-attendance
+    runtime: docker
+    plan: free
+    branch: main
+    dockerfilePath: ./Dockerfile
+    dockerContext: .
+    dockerCommand: >-
+      /bin/sh -c 'python backend/download_models.py && exec python -m uvicorn backend.app:app --host 0.0.0.0 --port "${PORT:-10000}"'
+    healthCheckPath: /api/health
+    envVars:
+      - key: CLASSLENS_DATA_DIR
+        value: /tmp/classlens/data
+      - key: CLASSLENS_MODEL_DIR
+        value: /tmp/classlens/models
+      - key: CLASSLENS_SECRET
+        generateValue: true
